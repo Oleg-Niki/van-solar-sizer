@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Solar & Battery Sizing</title>
+</head>
+<body>
+  <h1>Van Solar & Battery Sizing</h1>
+
+  <form method="post">
+    {% csrf_token %}
+    {{ design_form.as_p }}
+
+    <h2>Appliances</h2>
+    {{ appliance_formset.management_form }}
+    {% for form in appliance_formset %}
+      <fieldset>
+        {{ form.as_p }}
+      </fieldset>
+    {% endfor %}
+
+    <button type="submit">Submit</button>
+  </form>
+
+  {% if submitted %}
+    <hr>
+    <h2>Received Input</h2>
+    <pre>{{ data|safe }}</pre>
+
+    <h3>Appliances</h3>
+    <ul>
+      {% for app in appliances %}
+        <li>{{ app.name }}: {{ app.watts }} W × {{ app.hours }} h/day</li>
+      {% endfor %}
+    </ul>
+  {% endif %}
+</body>
+</html>
