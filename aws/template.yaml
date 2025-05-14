@@ -1,0 +1,67 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: AWS::Serverless-2016-10-31
+Description: Van Solar Sizing Lambdas
+
+Globals:
+  Function:
+    Runtime: python3.9
+    Timeout: 10
+    Environment:
+      Variables:
+        PVWATTS_API_KEY: !Ref PVWattsKey
+
+Parameters:
+  PVWattsKey:
+    Type: String
+  Stage:
+    Type: String
+    Default: dev
+
+Resources:
+
+  FetchIrradianceFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      Handler: fetch_irradiance.handler
+      CodeUri: ./  # assumes this template lives in aws/
+      Events:
+        GetIrradiance:
+          Type: Api
+          Properties:
+            Path: /fetch_irradiance
+            Method: get
+
+  CalcLoadFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      Handler: calc_load.handler
+      CodeUri: ./
+      Events:
+        PostLoad:
+          Type: Api
+          Properties:
+            Path: /calc_load
+            Method: post
+
+  SizeSystemFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      Handler: size_system.handler
+      CodeUri: ./
+      Events:
+        PostSize:
+          Type: Api
+          Properties:
+            Path: /size_system
+            Method: post
+
+Outputs:
+  FetchIrradianceAPI:
+    Description: "Fetch Irradiance URL"
+    Value: !Sub "https://${ServerlessRestApi}.execute-api.${AWS::Region}.amazonaws.com/${Stage}/fetch_irradiance"
+  CalcLoadAPI:
+    Description: "Calc Load URL"
+    Value: !Sub "https://${ServerlessRestApi}.execute-api.${AWS::Region}.amazonaws.com/${Stage}/calc_load"
+  SizeSystemAPI:
+    Description: "Size System URL"
+    Value: !Sub "https://${ServerlessRestApi}.execute-api.${AWS::Region}.amazonaws.com/${Stage}/size_system"
