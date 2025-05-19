@@ -22,7 +22,7 @@
     <button type="submit">Submit</button>
   </form>
 
-  {% if submitted %}
+  {% comment %} {% if submitted %}
     <hr>
     <h2>Received Input</h2>
     <pre>{{ data|safe }}</pre>
@@ -33,6 +33,18 @@
         <li>{{ app.name }}: {{ app.watts }} W × {{ app.hours }} h/day</li>
       {% endfor %}
     </ul>
-  {% endif %}
+  {% endif %} {% endcomment %}
+{% if submitted %}
+  <hr>
+  <h2>Sizing Results</h2>
+  <ul>
+    <li>Average sun-hours/day: {{ sun_hours }}</li>
+    <li>Daily load: {{ daily_load_wh }} Wh</li>
+    <li>Recommended PV array: {{ panel_w }} W</li>
+    <li>Recommended battery bank: {{ battery_ah }} Ah</li>
+  </ul>
+{% endif %}
+
+
 </body>
 </html>
