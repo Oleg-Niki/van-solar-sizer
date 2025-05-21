@@ -23,7 +23,7 @@ Resources:
     Type: AWS::Serverless::Function
     Properties:
       Handler: fetch_irradiance.handler
-      CodeUri: ./  # assumes this template lives in aws/
+      CodeUri: ./  
       Events:
         GetIrradiance:
           Type: Api

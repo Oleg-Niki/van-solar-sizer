@@ -34,5 +34,5 @@ def handler(event, context):
         return {"statusCode": 500, "body": json.dumps({"error": data})}
 
     # V8 returns 'solrad_monthly' (an array) and 'solrad_annual'
-    sun_hours = data["outputs"]["solrad_annual"] / 365.0
+    sun_hours = data["outputs"]["solrad_annual"]
     return {"statusCode": 200, "body": json.dumps({"sun_hours": sun_hours})}
