@@ -1,4 +1,7 @@
-# smoke_test.py
+#script that loads Lambdas locally, 
+#calls each handler in sequence, 
+#prints out sun-hours, load, and sizing.
+
 import os, json
 from dotenv import load_dotenv
 
@@ -7,8 +10,6 @@ print("Files here:", os.listdir())
 
 # 1) load .env
 load_dotenv()
-
-print("Loaded PVWATTS_API_KEY:", os.getenv("PVWATTS_API_KEY"))
 
 # DEBUG: print what key we actually have
 print("Loaded PVWATTS_API_KEY:", os.getenv("PVWATTS_API_KEY"))

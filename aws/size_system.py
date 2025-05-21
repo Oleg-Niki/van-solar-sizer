@@ -9,6 +9,7 @@ def handler(event, context):
     bat_v = body.get("bat_v", 12)
     dod   = body.get("dod", 0.5)
 
+#MAKE SURE THIS FORMULA CORRECT:
     panel_w    = math.ceil(load / (sun * eff))
     battery_ah = math.ceil((load / bat_v) / dod)
 
